@@ -146,6 +146,12 @@
     <!-- Default screen brightness for VR setting. Default value: 0x56 => 86. -->
     <integer name="config_screenBrightnessForVrSettingDefault">86</integer>
 
+    <!-- Fast brightness animation ramp rate in brightness units per second-->
+    <integer name="config_brightness_ramp_rate_fast">308</integer>
+
+    <!-- Slow brightness animation ramp rate in brightness units per second-->
+    <integer name="config_brightness_ramp_rate_slow">246</integer>    
+
     <!-- Stability requirements in milliseconds for accepting a new brightness level.  This is used
          for debouncing the light sensor.  Different constants are used to debounce the light sensor
          when adapting to brighter or darker environments.  This parameter controls how quickly
