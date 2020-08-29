@@ -1,0 +1,4 @@
+# Battery
+/vendor/bin/batteryd		u:object_r:batteryd_exec:s0
+/vendor/bin/batterysecret		u:object_r:batterysecret_exec:s0
+/mnt/vendor/persist/subsys(/.*)?                u:object_r:persist_subsys_file:s0
