@@ -87,26 +87,37 @@ TARGET_INIT_VENDOR_LIB := //$(DEVICE_PATH):libinit_curtana
 TARGET_RECOVERY_DEVICE_MODULES := libinit_curtana
 
 # Kernel
-BOARD_RAMDISK_OFFSET := 0x01000000
-BOARD_KERNEL_TAGS_OFFSET := 0x00000100
-BOARD_KERNEL_OFFSET := 0x00008000
-BOARD_KERNEL_SECOND_OFFSET := 0x00f00000
 BOARD_KERNEL_BASE := 0x00000000
-BOARD_KERNEL_PAGESIZE := 4096
-BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img
-BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200n8 androidboot.hardware=qcom androidboot.console=ttyMSM0 androidboot.memcg=1 lpm_levels.sleep_disabled=1 video=vfb:640x400,bpp=32,memsize=3072000 msm_rtb.filter=0x237 service_locator.enable=1 swiotlb=1 androidboot.usbcontroller=a600000.dwc3 earlycon=msm_geni_serial,0xa88000 loop.max_part=7 cgroup.memory=nokmem,nosocket msm_rtb.enabled=1
-BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
-BOARD_KERNEL_CMDLINE += androidboot.init_fatal_reboot_target=recovery
-TARGET_KERNEL_ARCH := arm64
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
-ifeq ($(TARGET_PREBUILT_KERNEL),)
-  TARGET_KERNEL_CONFIG := vendor/curtana-perf_defconfig
-  TARGET_KERNEL_CLANG_COMPILE := true
-  TARGET_KERNEL_CLANG_VERSION := 11.0
-  KERNEL_TOOLCHAIN := $(shell pwd)/prebuilts/clang/host/linux-x86/clang-11.0/bin
-  TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-gnu-
-  TARGET_KERNEL_SOURCE := kernel/redmi/sm6250
-endif
+BOARD_KERNEL_PAGESIZE := 4096
+BOARD_KERNEL_SEPARATED_DTBO := true
+BOARD_KERNEL_TAGS_OFFSET := 0x00000100
+BOARD_RAMDISK_OFFSET := 0x01000000
+
+BOARD_BOOT_HEADER_VERSION := 2
+BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
+BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+
+TARGET_KERNEL_ARCH := arm64
+TARGET_KERNEL_CLANG_COMPILE := true
+TARGET_KERNEL_CONFIG := cust_defconfig
+TARGET_KERNEL_SOURCE := kernel/redmi/curtana
+
+BOARD_KERNEL_CMDLINE += androidboot.console=ttyMSM0
+BOARD_KERNEL_CMDLINE += androidboot.hardware=qcom
+BOARD_KERNEL_CMDLINE += androidboot.memcg=1
+BOARD_KERNEL_CMDLINE += androidboot.usbcontroller=a600000.dwc3
+BOARD_KERNEL_CMDLINE += cgroup.memory=nokmem,nosocket
+BOARD_KERNEL_CMDLINE += console=ttyMSM0,115200n8
+BOARD_KERNEL_CMDLINE += earlycon=msm_geni_serial,0xa88000
+BOARD_KERNEL_CMDLINE += loop.max_part=7
+BOARD_KERNEL_CMDLINE += lpm_levels.sleep_disabled=1
+BOARD_KERNEL_CMDLINE += msm_rtb.enabled=1
+BOARD_KERNEL_CMDLINE += msm_rtb.filter=0x237
+BOARD_KERNEL_CMDLINE += service_locator.enable=1
+BOARD_KERNEL_CMDLINE += swiotlb=1
+BOARD_KERNEL_CMDLINE += video=vfb:640x400,bpp=32,memsize=3072000
+BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 
 # Platform
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno618
